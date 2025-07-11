@@ -29,42 +29,26 @@ def set_bg_image(image_file):
 set_bg_image("coronavirus.jpg")
 
 # ---------- Constants ----------
-MODEL_ID = "4T1R6STQwfZeDgkAloZ0RM3lYRKgj69p"  # Replace with your actual file ID
+MODEL_URL = "https://huggingface.co/Vansh1128/covid/resolve/main/covid_cnn_model.h5"
 MODEL_PATH = "covid_cnn_model.h5"
 
-# ---------- Download model from Google Drive ----------
-def download_file_from_google_drive(id, destination):
-    URL = "https://docs.google.com/uc?export=download"
-    session = requests.Session()
-
-    response = session.get(URL, params={'id': id}, stream=True)
-    token = get_confirm_token(response)
-
-    if token:
-        params = {'id': id, 'confirm': token}
-        response = session.get(URL, params=params, stream=True)
-
-    save_response_content(response, destination)
-
-def get_confirm_token(response):
-    for key, value in response.cookies.items():
-        if key.startswith('download_warning'):
-            return value
-    return None
-
-def save_response_content(response, destination):
-    CHUNK_SIZE = 32768
-    with open(destination, "wb") as f:
-        for chunk in response.iter_content(CHUNK_SIZE):
-            if chunk:
-                f.write(chunk)
+# ---------- Download model from Hugging Face ----------
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        with st.spinner("Downloading model from Hugging Face..."):
+            r = requests.get(MODEL_URL, stream=True)
+            if r.status_code == 200:
+                with open(MODEL_PATH, 'wb') as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        f.write(chunk)
+            else:
+                st.error("Failed to download model.")
+                st.stop()
 
 # ---------- Load Model with caching ----------
 @st.cache_resource
 def load_cnn_model():
-    if not os.path.exists(MODEL_PATH):
-        with st.spinner("Downloading model..."):
-            download_file_from_google_drive(MODEL_ID, MODEL_PATH)
+    download_model()
     model = load_model(MODEL_PATH)
     return model
 
@@ -109,8 +93,5 @@ if uploaded:
 st.markdown("---")
 st.caption("⚠️ This app is for educational purposes only. Always rely on professional medical advice.")
 
-# ---------- Footer ----------
-st.markdown("---")
-st.caption("⚠️ This app is for educational purposes only. Always rely on professional medical advice.")
 
 
