@@ -30,7 +30,7 @@ set_bg_image("coronavirus.jpg")  # Make sure this image is in the repo
 
 # ---------- Model Download & Load ----------
 MODEL_PATH = "covid_cnn_model.h5"
-MODEL_URL = "YOUR_DIRECT_DOWNLOAD_LINK_TO_MODEL_HERE"  # Replace with actual URL
+MODEL_URL = "https://drive.google.com/file/d/14T1R6STQwfZeDgkAloZ0RM3lYRKgj69p/view?usp=drive_link" 
 
 def download_model():
     if not os.path.exists(MODEL_PATH):
