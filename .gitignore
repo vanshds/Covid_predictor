@@ -1,0 +1,16 @@
+# Ignore dataset
+chest_xray_covid/
+
+# Ignore saved model weights
+*.h5
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore virtual environments
+venv/
+.env/
