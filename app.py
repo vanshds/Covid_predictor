@@ -29,7 +29,7 @@ def set_bg_image(image_file):
 set_bg_image("coronavirus.jpg")
 
 # ---------- Constants ----------
-MODEL_ID = "14T1R6STQwfZeDgkAloZ0RM3lYRKgj69p"  # Replace with your actual file ID
+MODEL_ID = "4T1R6STQwfZeDgkAloZ0RM3lYRKgj69p"  # Replace with your actual file ID
 MODEL_PATH = "covid_cnn_model.h5"
 
 # ---------- Download model from Google Drive ----------
@@ -104,6 +104,10 @@ if uploaded:
         - ☎️ Contact healthcare services if symptoms worsen.
         - 😷 Wear a mask even at home.
         """)
+
+# ---------- Footer ----------
+st.markdown("---")
+st.caption("⚠️ This app is for educational purposes only. Always rely on professional medical advice.")
 
 # ---------- Footer ----------
 st.markdown("---")
